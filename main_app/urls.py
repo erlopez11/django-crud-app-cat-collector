@@ -6,5 +6,7 @@ urlpatterns = [
     path('', views.home, name='home'), # route to homepage
     #path('about/...')
     path('about/', views.about, name='about'),
+    path('cats/', views.cat_index, name='cat-index'),
     #path('create/...')
+    
 ]
