@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Cat
+from .forms import FeedingForm
 
 #Define the home view function
 #Controlle code in python
@@ -23,7 +25,29 @@ def cat_index(request):
     }) #context dictionary {'cats', cats}
 
 def cat_detail(request, cat_id):
-    cat = Cat.objects.get(id=cat_id)
+    cat = Cat.objects.get(id=cat_id) #object is the manager property
+    feeding_form = FeedingForm()
     return render(request, 'cats/detail.html', {
-        'cat': cat
+        'cat': cat,
+        'feeding_form' : feeding_form
     })
+
+def add_feeding(request, cat_id):
+    form = FeedingForm(request.POST) #how we access form submissions
+    if form.is_valid():
+        new_feeding = form.save(commit=False) #save in memory but NOT commit to the database
+        new_feeding.cat_id = cat_id
+        new_feeding.save() #it is ready so save to the database
+    return redirect('cat-detail', cat_id)
+
+class CatCreate(CreateView):
+    model = Cat
+    fields = ['name', 'breed', 'description', 'age']
+
+class CatUpdate(UpdateView):
+    model = Cat
+    fields = ['breed', 'description', 'age']
+
+class CatDelete(DeleteView):
+    model = Cat
+    success_url = '/cats/'
