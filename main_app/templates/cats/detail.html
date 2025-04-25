@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css">
+<link rel="stylesheet" href="{% static "css/mcdp.css" %}">
+<script src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"></script>
+<script defer src="{% static "js/cat-detail.js" %}"></script>
 <link rel="stylesheet" href="{% static "css/cats/cat-detail.css" %}">
 {% endblock %}
 
