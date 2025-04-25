@@ -11,4 +11,16 @@
     </div>
     <img src="{% static "images/logotype.svg" %}" alt="Text reads: Cat Collector"/>
 </section>
+{% if not user.is_authenticated %}
+  <section>
+      <h1>Login</h1>
+      <form action="{% url "home" %}" method="post" class="login">
+          {% csrf_token %}
+          {{form.as_p}}
+          <input type="hidden" name="next" value="{{ next }}"/> 
+        {% comment %}^ redirect you back where you were trying to go after login {% endcomment %}
+          <button type="submit" class="btn submit">Login</button>
+      </form>
+  </section>
+{% endif %}
 {% endblock %}
